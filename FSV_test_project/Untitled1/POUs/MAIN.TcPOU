@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{e29008e8-7ba7-4a55-838a-88b2f90948ea}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	open_directive		: 	BOOL;
+	delay 				:	LINT;
+	delay_timer_limit	:	LINT;
+	open_pin 	AT%Q* 	: 	BOOL;
+	close_pin 	AT%Q* 	:	BOOL;
+	
+	open_limit 	AT%I*	: 	BOOL;
+	close_limit AT%I*	: 	BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF NOT open_directive THEN
+	IF delay < delay_timer_limit THEN
+		delay := delay+ 1;
+	END_IF
+ELSE
+	delay := 0;
+END_IF
+
+IF delay >= delay_timer_limit THEN
+	close_pin := TRUE;
+ELSE
+	close_pin := FALSE;
+END_IF
+
+open_pin := open_directive;
+(*
+IF NOT open_limit THEN
+	open_pin := open_directive;
+ELSE
+	open_PIN := FALSE;
+END_IF
+*)
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="25" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="21" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
